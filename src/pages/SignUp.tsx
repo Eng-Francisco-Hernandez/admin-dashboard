@@ -1,16 +1,33 @@
 import { useMutation } from "@apollo/client";
 import { Button, Card, Form } from "react-bootstrap";
 import { CREATE_USER_M } from "../lib";
-import { Roles } from "../data/enums";
+import { Role } from "../data/enums";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  const [createUser, { data, loading, error }] = useMutation(CREATE_USER_M);
+  let navigate = useNavigate();
+  const [createUser, { data, loading, error }] = useMutation(CREATE_USER_M, {
+    onCompleted: (data) => {
+      navigate("/login");
+    },
+    onError: (error) => {},
+  });
+
+  const [validated, setValidated] = useState(false);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    setValidated(true);
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
+    if (formDataObj.password !== formDataObj.confirmPassword) return;
     createUser({
       variables: {
         email: formDataObj.email,
@@ -24,46 +41,62 @@ export default function SignUp() {
     <div className="auth-layout">
       <Card className="auth-form">
         <h2 className="title">Sign Up</h2>
-        <Form onSubmit={handleSubmit}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Label htmlFor="inputEmail">Email</Form.Label>
           <Form.Control
+            required
+            maxLength={60}
             name="email"
             type="email"
             id="inputEmail"
             className="mb-3"
           />
           <Form.Label htmlFor="inputRole">Role</Form.Label>
-          <Form.Select id="inputRole" name="role" aria-label="Role select" className="mb-3">
-            {Object.keys(Roles).map((role, i) => {
-              return <option value={role}>{role}</option>;
+          <Form.Select
+            id="inputRole"
+            name="role"
+            aria-label="Role select"
+            className="mb-3"
+          >
+            {Object.keys(Role).map((role, i) => {
+              return (
+                <option key={i} value={role}>
+                  {role}
+                </option>
+              );
             })}
           </Form.Select>
           <Form.Label htmlFor="inputPassword">Password</Form.Label>
           <Form.Control
+            required
+            maxLength={20}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             name="password"
             type="password"
             id="inputPassword"
-            aria-describedby="passwordHelpBlock"
             className="mb-3"
           />
           <Form.Label htmlFor="inputPasswordConfirm">
             Confirm password
           </Form.Label>
           <Form.Control
+            required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            maxLength={20}
             name="confirmPassword"
             type="password"
+            aria-describedby="passwordHelpBlock"
             id="inputPasswordConfirm"
           />
           <Form.Text id="passwordHelpBlock" muted>
-            Your password must be 8-20 characters long, contain letters and
-            numbers, and must not contain spaces, special characters, or emoji.
+            Your password must be 8-20 characters long, contain lower and upper
+            case letters and numbers, and must not contain spaces, special
+            characters, or emoji.
           </Form.Text>
-          <div>
-            <div className="d-grid gap-2">
-              <Button className="mt-3" type="submit">
-                Sign up
-              </Button>
-            </div>
+          <div className="d-grid gap-2">
+            <Button className="mt-3" type="submit">
+              Sign up
+            </Button>
           </div>
         </Form>
         <p className="auth-already-done">
