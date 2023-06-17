@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { Button, Card, Form } from "react-bootstrap";
 import { CREATE_USER_M } from "../lib";
+import { Roles } from "../data/enums";
 
 export default function SignUp() {
   const [createUser, { data, loading, error }] = useMutation(CREATE_USER_M);
@@ -10,10 +11,13 @@ export default function SignUp() {
     e.preventDefault();
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
-    createUser({ variables: {
-      email: formDataObj.email,
-      password: formDataObj.password
-    } });
+    createUser({
+      variables: {
+        email: formDataObj.email,
+        role: formDataObj.role,
+        password: formDataObj.password,
+      },
+    });
   };
 
   return (
@@ -28,6 +32,12 @@ export default function SignUp() {
             id="inputEmail"
             className="mb-3"
           />
+          <Form.Label htmlFor="inputRole">Role</Form.Label>
+          <Form.Select id="inputRole" name="role" aria-label="Role select" className="mb-3">
+            {Object.keys(Roles).map((role, i) => {
+              return <option value={role}>{role}</option>;
+            })}
+          </Form.Select>
           <Form.Label htmlFor="inputPassword">Password</Form.Label>
           <Form.Control
             name="password"
