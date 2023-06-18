@@ -10,8 +10,9 @@ export default function Login() {
 
   const [login, { data, loading, error }] = useMutation(LOGIN_M, {
     onCompleted: (data) => {
-      console.log(data);
-      // navigate("/home");
+      localStorage.setItem('accessToken', data.login.accessToken);
+      localStorage.setItem('refreshToken', data.login.refreshToken);
+      navigate("/home");
     },
     onError: (error) => {
       console.log(error);

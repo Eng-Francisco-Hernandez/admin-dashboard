@@ -12,4 +12,8 @@ export const Navigation: { [key: string]: RouteNavigationType } = {
     element: "Register",
     path: "/register",
   },
+  HOME: {
+    element: "Home",
+    path: "/home",
+  },
 };
