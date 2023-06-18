@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import { Navigation } from "./navigation";
-import { Login, SignUp } from "../pages";
+import { Login, Register } from "../pages";
 
 const routeComponents: { [key: string]: React.ReactNode } = {
   Login: <Login />,
-  SignUp: <SignUp />,
+  Register: <Register />,
 };
 
 export type RouteNavigationType = {

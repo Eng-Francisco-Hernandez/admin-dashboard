@@ -1,20 +1,22 @@
 import { useMutation } from "@apollo/client";
 import { Button, Card, Form } from "react-bootstrap";
-import { CREATE_USER_M } from "../lib";
+import { REGISTER_M } from "../lib";
 import { Role } from "../data/enums";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function SignUp() {
+export default function Register() {
   let navigate = useNavigate();
-  const [createUser, { data, loading, error }] = useMutation(CREATE_USER_M, {
+  const [validated, setValidated] = useState(false);
+
+  const [register, { data, loading, error }] = useMutation(REGISTER_M, {
     onCompleted: (data) => {
       navigate("/login");
     },
-    onError: (error) => {},
+    onError: (error) => {
+      console.log(error);
+    },
   });
-
-  const [validated, setValidated] = useState(false);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ export default function SignUp() {
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
     if (formDataObj.password !== formDataObj.confirmPassword) return;
-    createUser({
+    register({
       variables: {
         email: formDataObj.email,
         role: formDataObj.role,
@@ -40,7 +42,7 @@ export default function SignUp() {
   return (
     <div className="auth-layout">
       <Card className="auth-form">
-        <h2 className="title">Sign Up</h2>
+        <h2 className="title">Register</h2>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Label htmlFor="inputEmail">Email</Form.Label>
           <Form.Control
@@ -95,7 +97,7 @@ export default function SignUp() {
           </Form.Text>
           <div className="d-grid gap-2">
             <Button className="mt-3" type="submit">
-              Sign up
+              Register
             </Button>
           </div>
         </Form>

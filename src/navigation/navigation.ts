@@ -8,8 +8,8 @@ export const Navigation: { [key: string]: RouteNavigationType } = {
     element: "Login",
     path: "/login",
   },
-  SIGNUP: {
-    element: "SignUp",
-    path: "/signup",
+  REGISTER: {
+    element: "Register",
+    path: "/register",
   },
 };

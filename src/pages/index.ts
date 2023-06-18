@@ -1,3 +1,3 @@
 import Login from "./Login";
-import SignUp from "./SignUp";
-export { Login, SignUp };
+import Register from "./Register";
+export { Login, Register };
