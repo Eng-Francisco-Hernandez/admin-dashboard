@@ -3,15 +3,16 @@ import * as React from "react";
 import { Navigation } from "./navigation";
 import { Login, Register, Home } from "../pages";
 
-const routeComponents: { [key: string]: React.ReactNode } = {
+const routeComponents: { [key: string]: JSX.Element } = {
   Login: <Login />,
   Register: <Register />,
   Home: <Home />,
 };
 
 export type RouteNavigationType = {
-  element: React.ReactNode;
+  element: JSX.Element;
   path: string;
+  public: boolean;
 };
 
 export const ROUTES: Array<RouteNavigationType> = Object.keys(

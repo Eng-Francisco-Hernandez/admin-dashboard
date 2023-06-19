@@ -1,5 +1,5 @@
 import { Button, Card, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { LOGIN_M } from "../lib";
 import { useMutation } from "@apollo/client";
@@ -10,8 +10,8 @@ export default function Login() {
 
   const [login, { data, loading, error }] = useMutation(LOGIN_M, {
     onCompleted: (data) => {
-      localStorage.setItem('accessToken', data.login.accessToken);
-      localStorage.setItem('refreshToken', data.login.refreshToken);
+      localStorage.setItem("accessToken", data.login.accessToken);
+      localStorage.setItem("refreshToken", data.login.refreshToken);
       navigate("/home");
     },
     onError: (error) => {
@@ -34,6 +34,11 @@ export default function Login() {
       variables: formDataObj,
     });
   };
+
+  const authed =
+    localStorage.getItem("accessToken") && localStorage.getItem("refreshToken");
+
+  if (authed) return <Navigate to="/home" />;
 
   return (
     <div className="auth-layout">
