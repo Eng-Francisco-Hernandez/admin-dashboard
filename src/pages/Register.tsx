@@ -9,7 +9,7 @@ export default function Register() {
   let navigate = useNavigate();
   const [validated, setValidated] = useState(false);
 
-  const [register, { data, loading, error }] = useMutation(REGISTER_M, {
+  const [register] = useMutation(REGISTER_M, {
     onCompleted: (data) => {
       navigate("/login");
     },

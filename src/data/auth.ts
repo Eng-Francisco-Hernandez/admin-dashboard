@@ -17,5 +17,5 @@ export const PERMISSIONS: {
     SCOPES.canCreate,
     SCOPES.canDelete,
   ],
-  [""]: []
+  '': []
 };

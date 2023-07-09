@@ -1,23 +1,31 @@
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { LOGOUT_M } from "../../lib";
+import { LOGOUT_M, UPDATE_SELF_ROLE_M } from "../../lib";
 import PermissionsGate from "../auth/PermissionsGate";
-import { SCOPES } from "../../data";
+import { Role, SCOPES } from "../../data";
 
 export default function NavBar() {
   let navigate = useNavigate();
 
-  const [logout, { data, loading, error }] = useMutation(LOGOUT_M, {
+  const [logout] = useMutation(LOGOUT_M, {
     onCompleted: (data) => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       navigate("/login");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const [updateSelfRole] = useMutation(UPDATE_SELF_ROLE_M, {
+    onCompleted: (data) => {
+      window.location.reload();
     },
     onError: (error) => {
       console.log(error);
@@ -35,24 +43,35 @@ export default function NavBar() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            {/* <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form> */}
             <Nav.Link>Home</Nav.Link>
             <PermissionsGate scopes={[SCOPES.canCreate]}>
-              <Nav.Link>Admin</Nav.Link>
+              <Nav.Link>Edit</Nav.Link>
             </PermissionsGate>
-            <Nav.Link disabled>Viewer</Nav.Link>
+            <Nav.Link>View data</Nav.Link>
             <NavDropdown title="Change role" id="navbarScrollingDropdown">
-              <NavDropdown.Item>Viewer</NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() =>
+                  updateSelfRole({
+                    variables: {
+                      newRole: Role.Viewer,
+                    },
+                  })
+                }
+              >
+                Viewer
+              </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item>Editor</NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() =>
+                  updateSelfRole({
+                    variables: {
+                      newRole: Role.Editor,
+                    },
+                  })
+                }
+              >
+                Editor
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Button

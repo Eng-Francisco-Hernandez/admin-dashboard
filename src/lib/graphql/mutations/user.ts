@@ -5,3 +5,15 @@ export const REGISTER_M = gql`
     register(email: $email, role: $role, password: $password)
   }
 `;
+
+export const UPDATE_SELF_ROLE_M = gql`
+  mutation updateSelfRole($newRole: String!) {
+    updateSelfRole(newRole: $newRole)
+  }
+`;
+
+export const UPDATE_ROLE_M = gql`
+  mutation updateRole($userId: String!, $newRole: String!) {
+    updateRole(userId: $userId, newRole: $newRole)
+  }
+`;
