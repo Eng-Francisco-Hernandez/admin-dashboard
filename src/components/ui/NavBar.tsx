@@ -7,6 +7,8 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGOUT_M } from "../../lib";
+import PermissionsGate from "../auth/PermissionsGate";
+import { SCOPES } from "../../data";
 
 export default function NavBar() {
   let navigate = useNavigate();
@@ -43,8 +45,10 @@ export default function NavBar() {
               <Button variant="outline-success">Search</Button>
             </Form> */}
             <Nav.Link>Home</Nav.Link>
-            <Nav.Link>Link</Nav.Link>
-            <Nav.Link disabled>Link</Nav.Link>
+            <PermissionsGate scopes={[SCOPES.canCreate]}>
+              <Nav.Link>Admin</Nav.Link>
+            </PermissionsGate>
+            <Nav.Link disabled>Viewer</Nav.Link>
             <NavDropdown title="Change role" id="navbarScrollingDropdown">
               <NavDropdown.Item>Viewer</NavDropdown.Item>
               <NavDropdown.Divider />

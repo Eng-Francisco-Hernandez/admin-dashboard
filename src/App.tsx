@@ -23,6 +23,10 @@ function App() {
           />
         )
       )}
+      <Route
+        path="/*"
+        element={authed ? <Navigate to="/home" /> : <Navigate to="/login" />}
+      />
     </Routes>
   );
 }

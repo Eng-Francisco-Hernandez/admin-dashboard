@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { Button, Card, Form } from "react-bootstrap";
 import { REGISTER_M } from "../lib";
-import { Role } from "../data/enums";
+import { Role } from "../data";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
