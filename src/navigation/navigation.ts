@@ -20,4 +20,9 @@ export const Navigation: { [key: string]: RouteNavigationType } = {
     path: "/home",
     public: false
   },
+  CREATE: {
+    element: "Create",
+    path: "/create",
+    public: false
+  },
 };

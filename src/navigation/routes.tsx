@@ -1,12 +1,13 @@
 import * as React from "react";
 
 import { Navigation } from "./navigation";
-import { Login, Register, Home } from "../pages";
+import { Login, Register, Home, Create } from "../pages";
 
 const routeComponents: { [key: string]: JSX.Element } = {
   Login: <Login />,
   Register: <Register />,
   Home: <Home />,
+  Create: <Create />,
 };
 
 export type RouteNavigationType = {

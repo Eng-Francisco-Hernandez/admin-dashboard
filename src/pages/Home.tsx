@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { GET_DATA_Q } from "../lib/graphql/queries/data";
-import { NavBar } from "../components";
+import { Jumbotron, NavBar } from "../components";
 import { useQuery } from "@apollo/client";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import useGetUserRole from "../hooks/useGetUserRole";
 
 export default function Home() {
   const [graphData, setGraphData] = useState([]);
+  const role: string = useGetUserRole();
 
   const { data: getData, loading: isLoading } = useQuery(GET_DATA_Q);
 
@@ -30,6 +25,13 @@ export default function Home() {
       <NavBar />
       <Container className="mt-5">
         <Row>
+          <Col>
+            <Jumbotron
+              title={`Welcome you are in the "${role.toLowerCase()}" view`}
+            />
+          </Col>
+        </Row>
+        <Row className="mt-5">
           <Col xs={6}>
             <Card>
               <Card.Body
@@ -38,7 +40,7 @@ export default function Home() {
                   alignItems: "center",
                   flexDirection: "column",
                   justifyContent: "center",
-                  overflow: 'auto'
+                  overflow: "auto",
                 }}
               >
                 <LineChart
@@ -51,17 +53,11 @@ export default function Home() {
                     left: 5,
                   }}
                 >
-                  <XAxis dataKey="name" />
+                  <XAxis />
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="pv"
-                    stroke="#8884d8"
-                    activeDot={{ r: 8 }}
-                  />
-                  <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                  <Line type="monotone" dataKey="pv" />
                 </LineChart>
               </Card.Body>
             </Card>

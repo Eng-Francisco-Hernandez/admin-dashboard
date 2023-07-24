@@ -33,7 +33,7 @@ export default function NavBar() {
   });
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" bg="dark" data-bs-theme="dark">
       <Container fluid>
         <Navbar.Brand>Welcome</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -43,11 +43,10 @@ export default function NavBar() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link>Home</Nav.Link>
+            <Nav.Link href="/home">Home</Nav.Link>
             <PermissionsGate scopes={[SCOPES.canCreate]}>
-              <Nav.Link>Edit</Nav.Link>
+              <Nav.Link href="/create">Create new graph</Nav.Link>
             </PermissionsGate>
-            <Nav.Link>View data</Nav.Link>
             <NavDropdown title="Change role" id="navbarScrollingDropdown">
               <NavDropdown.Item
                 onClick={() =>
