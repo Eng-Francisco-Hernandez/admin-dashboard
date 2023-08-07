@@ -14,6 +14,12 @@ import {
 import useGetUserRole from "../hooks/useGetUserRole";
 import { useNavigate } from "react-router-dom";
 import { LineChart, XAxis, YAxis, Legend, Line } from "recharts";
+import { useMutation } from "@apollo/client";
+import { CREATE_GRAPH_M } from "../lib";
+
+export interface Point {
+  data: number;
+}
 
 export default function Create() {
   const role: string = useGetUserRole();
@@ -25,18 +31,36 @@ export default function Create() {
     }
   }, [role]);
 
-  const [points, setPoints] = useState<any>([]);
+  const [points, setPoints] = useState<Point[]>([]);
   const [graphName, setGraphNam] = useState("");
   const [newPointValue, setnewPointValue] = useState("");
 
   const addValue = () => {
-    setPoints((prevVal: any) => [
+    setPoints((prevVal: Point[]) => [
       ...prevVal,
       {
         data: parseInt(newPointValue),
       },
     ]);
     setnewPointValue("");
+  };
+
+  const [createGraph] = useMutation(CREATE_GRAPH_M, {
+    onCompleted: (data) => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const saveGraph = () => {
+    createGraph({
+      variables: {
+        graph: {
+          name: graphName,
+          points: points,
+        },
+      },
+    });
   };
 
   return (
@@ -61,7 +85,7 @@ export default function Create() {
                   className="mt-2"
                   size="sm"
                   disabled={graphName.trim() === "" || points.length === 0}
-                  onClick={addValue}
+                  onClick={saveGraph}
                 >
                   Save graph
                 </Button>
@@ -79,8 +103,18 @@ export default function Create() {
                 </tr>
               </thead>
               <tbody>
+                {points.map((point, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index}</td>
+                      <td>
+                        <Form.Control readOnly value={point.data} />
+                      </td>
+                    </tr>
+                  );
+                })}
                 <tr>
-                  <td>1</td>
+                  <td></td>
                   <td>
                     <Form.Control
                       value={newPointValue}
