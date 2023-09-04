@@ -9,9 +9,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <BrowserRouter basename={process.env.PUBLIC_URL}>
-    <ApolloProvider client={apolloClient}>
+  <ApolloProvider client={apolloClient}>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <App />
-    </ApolloProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </ApolloProvider>
 );
