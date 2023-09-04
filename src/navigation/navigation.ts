@@ -25,4 +25,9 @@ export const Navigation: { [key: string]: RouteNavigationType } = {
     path: "/create",
     public: false
   },
+  EDIT: {
+    element: "Edit",
+    path: "/edit/:id",
+    public: false
+  },
 };

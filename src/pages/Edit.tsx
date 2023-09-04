@@ -14,18 +14,29 @@ import {
   ToastContainer,
 } from "react-bootstrap";
 import useGetUserRole from "../hooks/useGetUserRole";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LineChart, XAxis, YAxis, Legend, Line } from "recharts";
-import { useMutation } from "@apollo/client";
-import { CREATE_GRAPH_M } from "../lib";
+import { useMutation, useQuery } from "@apollo/client";
+import { EDIT_GRAPH_M, GET_GRAPH_Q } from "../lib";
 
 export interface Point {
   data: number;
 }
 
-export default function Create() {
+export default function Edit() {
   const role: string = useGetUserRole();
   const navigate = useNavigate();
+  const params = useParams();
+
+  useQuery(GET_GRAPH_Q, {
+    variables: {
+      id: params.id,
+    },
+    onCompleted: (data) => {
+      setGraphName(data.getGraph.name);
+      setPoints(data.getGraph.points);
+    },
+  });
 
   useEffect(() => {
     if (role === Role.Viewer) {
@@ -36,7 +47,7 @@ export default function Create() {
   const [points, setPoints] = useState<Point[]>([]);
   const [graphName, setGraphName] = useState("");
   const [newPointValue, setnewPointValue] = useState("");
-  const [showCreateSuccess, setShowCreateSuccess] = useState(false);
+  const [showEditSuccess, setShowEditSuccess] = useState(false);
 
   const addValue = () => {
     setPoints((prevVal: Point[]) => [
@@ -48,11 +59,9 @@ export default function Create() {
     setnewPointValue("");
   };
 
-  const [createGraph] = useMutation(CREATE_GRAPH_M, {
+  const [editGraph] = useMutation(EDIT_GRAPH_M, {
     onCompleted: () => {
-      setShowCreateSuccess(true);
-      setPoints([]);
-      setGraphName("");
+      setShowEditSuccess(true);
     },
     onError: (error) => {
       console.log(error);
@@ -60,12 +69,13 @@ export default function Create() {
   });
 
   const saveGraph = () => {
-    createGraph({
+    editGraph({
       variables: {
         graph: {
           name: graphName,
           points: points,
         },
+        id: params.id,
       },
     });
   };
@@ -91,12 +101,12 @@ export default function Create() {
   };
 
   return (
-    <PermissionsGate scopes={[SCOPES.canCreate]}>
+    <PermissionsGate scopes={[SCOPES.canEdit]}>
       <NavBar />
       <Container className="mt-5 mb-5">
         <Row>
           <Col>
-            <Jumbotron title="Create new graph" />
+            <Jumbotron title={"Edit Graph"} />
           </Col>
         </Row>
         <Row className="mb-2 mt-2">
@@ -109,12 +119,13 @@ export default function Create() {
                   onChange={(e) => setGraphName(e.target.value)}
                 />
                 <Button
+                  variant="warning"
                   className="mt-2"
                   size="sm"
                   disabled={graphName.trim() === "" || points.length === 0}
                   onClick={saveGraph}
                 >
-                  Save graph
+                  Save changes
                 </Button>
               </Card.Body>
             </Card>
@@ -213,8 +224,8 @@ export default function Create() {
         style={{ zIndex: 1 }}
       >
         <Toast
-          onClose={() => setShowCreateSuccess(false)}
-          show={showCreateSuccess}
+          onClose={() => setShowEditSuccess(false)}
+          show={showEditSuccess}
           delay={3000}
           autohide
         >
@@ -224,9 +235,9 @@ export default function Create() {
               className="rounded me-2"
               alt=""
             />
-            <strong className="me-auto">Graph created</strong>
+            <strong className="me-auto">Graph editd</strong>
           </Toast.Header>
-          <Toast.Body>Your graph was successfully created!</Toast.Body>
+          <Toast.Body>Your graph was successfully editd!</Toast.Body>
         </Toast>
       </ToastContainer>
     </PermissionsGate>
