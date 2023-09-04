@@ -78,7 +78,7 @@ export default function Home() {
                       <XAxis />
                       <YAxis />
                       <Tooltip />
-                      <Line type="monotone" dataKey="data" />
+                      <Line type="basis" dataKey="data"  />
                     </LineChart>
                   </Card.Body>
                 </Card>

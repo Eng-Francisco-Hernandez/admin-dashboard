@@ -205,7 +205,7 @@ export default function Create() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="data" />
+                  <Line type="basis" dataKey="data" />
                 </LineChart>
               </Card.Body>
             </Card>
