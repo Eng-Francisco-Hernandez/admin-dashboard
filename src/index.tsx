@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <ApolloProvider client={apolloClient}>
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <App />
     </HashRouter>
   </ApolloProvider>
