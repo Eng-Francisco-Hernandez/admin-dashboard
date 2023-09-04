@@ -1,4 +1,11 @@
-import { Button, Card, Form, Toast, ToastContainer } from "react-bootstrap";
+import {
+  Alert,
+  Button,
+  Card,
+  Form,
+  Toast,
+  ToastContainer,
+} from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { LOGIN_M } from "../lib";
@@ -47,6 +54,14 @@ export default function Login() {
 
   return (
     <div className="auth-layout">
+      <Alert variant="warning">
+        You are in the Demo mode use the next credentials to sign in or register
+        a User
+        <ul>
+          <li className="bold">Email: admin@server.com</li>
+          <li className="bold">Password: Admin=1234</li>
+        </ul>
+      </Alert>
       <Card className="auth-form">
         <h2 className="title">Sign in</h2>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
