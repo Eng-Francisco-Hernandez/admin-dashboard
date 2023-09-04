@@ -1,5 +1,5 @@
 import { Button, Card, Form } from "react-bootstrap";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { LOGIN_M } from "../lib";
 import { useMutation } from "@apollo/client";
@@ -69,7 +69,7 @@ export default function Login() {
           </div>
         </Form>
         <p className="auth-already-done">
-          Not registered yet ? <a href="/register">Register</a>
+          Not registered yet ? <Link to="/register">Register</Link>
         </p>
       </Card>
     </div>

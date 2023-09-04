@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGOUT_M, UPDATE_SELF_ROLE_M } from "../../lib";
 import PermissionsGate from "../auth/PermissionsGate";
@@ -43,9 +43,11 @@ export default function NavBar() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="/home">Home</Nav.Link>
+            <Nav.Link onClick={() => navigate("/home")}>Home</Nav.Link>
             <PermissionsGate scopes={[SCOPES.canCreate]}>
-              <Nav.Link href="/create">Create new graph</Nav.Link>
+              <Nav.Link onClick={() => navigate("/create")}>
+                Create new graph
+              </Nav.Link>
             </PermissionsGate>
             <NavDropdown title="Change role" id="navbarScrollingDropdown">
               <NavDropdown.Item

@@ -3,7 +3,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import { REGISTER_M } from "../lib";
 import { Role } from "../data";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   let navigate = useNavigate();
@@ -102,7 +102,7 @@ export default function Register() {
           </div>
         </Form>
         <p className="auth-already-done">
-          Already registered? <a href="/login">Sign in</a>
+          Already registered? <Link to="/login">Sign in</Link>
         </p>
       </Card>
     </div>

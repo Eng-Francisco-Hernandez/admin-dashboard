@@ -16,7 +16,9 @@ export default function Home() {
     data: getGraphs = {
       getGraphs: [],
     },
-  } = useQuery(GET_GRAPHS_Q);
+  } = useQuery(GET_GRAPHS_Q, {
+    fetchPolicy: "network-only",
+  });
 
   return (
     <>
