@@ -55,9 +55,14 @@ export default function Create() {
       setGraphName("");
     },
     onError: (error) => {
-      console.log(error);
+      setShowError(true);
+      setErrorMessage(error.graphQLErrors.map((err) => err.message).join(" "));
+      console.log(JSON.stringify(error));
     },
   });
+
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const saveGraph = () => {
     createGraph({
@@ -227,6 +232,28 @@ export default function Create() {
             <strong className="me-auto">Graph created</strong>
           </Toast.Header>
           <Toast.Body>Your graph was successfully created!</Toast.Body>
+        </Toast>
+      </ToastContainer>
+      <ToastContainer
+        className="p-3"
+        position={"top-end"}
+        style={{ zIndex: 1 }}
+      >
+        <Toast
+          onClose={() => setShowError(false)}
+          show={showError}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Error</strong>
+          </Toast.Header>
+          <Toast.Body>{`Error: ${errorMessage}`}</Toast.Body>
         </Toast>
       </ToastContainer>
     </PermissionsGate>

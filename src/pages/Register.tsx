@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Form, Toast, ToastContainer } from "react-bootstrap";
 import { REGISTER_M } from "../lib";
 import { Role } from "../data";
 import { useState } from "react";
@@ -14,7 +14,9 @@ export default function Register() {
       navigate("/login");
     },
     onError: (error) => {
-      console.log(error);
+      setShowError(true);
+      setErrorMessage(error.graphQLErrors.map((err) => err.message).join(" "));
+      console.log(JSON.stringify(error));
     },
   });
 
@@ -38,6 +40,9 @@ export default function Register() {
       },
     });
   };
+
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   return (
     <div className="auth-layout">
@@ -105,6 +110,28 @@ export default function Register() {
           Already registered? <Link to="/login">Sign in</Link>
         </p>
       </Card>
+      <ToastContainer
+        className="p-3"
+        position={"top-end"}
+        style={{ zIndex: 1 }}
+      >
+        <Toast
+          onClose={() => setShowError(false)}
+          show={showError}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Error</strong>
+          </Toast.Header>
+          <Toast.Body>{`Error: ${errorMessage}`}</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Form, Toast, ToastContainer } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { LOGIN_M } from "../lib";
@@ -15,9 +15,14 @@ export default function Login() {
       navigate("/home");
     },
     onError: (error) => {
-      console.log(error);
+      setShowError(true);
+      setErrorMessage(error.graphQLErrors.map((err) => err.message).join(" "));
+      console.log(JSON.stringify(error));
     },
   });
+
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -72,6 +77,28 @@ export default function Login() {
           Not registered yet ? <Link to="/register">Register</Link>
         </p>
       </Card>
+      <ToastContainer
+        className="p-3"
+        position={"top-end"}
+        style={{ zIndex: 1 }}
+      >
+        <Toast
+          onClose={() => setShowError(false)}
+          show={showError}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Error</strong>
+          </Toast.Header>
+          <Toast.Body>{`Error: ${errorMessage}`}</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 }
