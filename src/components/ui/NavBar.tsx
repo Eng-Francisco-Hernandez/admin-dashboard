@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { LOGOUT_M, UPDATE_SELF_ROLE_M } from "../../lib";
+import { LOGOUT_M, UPDATE_SELF_ROLE_M, apolloClient } from "../../lib";
 import PermissionsGate from "../auth/PermissionsGate";
 import { Role, SCOPES } from "../../data";
 
@@ -24,8 +24,10 @@ export default function NavBar() {
   });
 
   const [updateSelfRole] = useMutation(UPDATE_SELF_ROLE_M, {
-    onCompleted: (data) => {
-      window.location.reload();
+    onCompleted: async (data) => {
+      await apolloClient.refetchQueries({
+        include: ["getUserRole"],
+      });
     },
     onError: (error) => {
       console.log(error);
