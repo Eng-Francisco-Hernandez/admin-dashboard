@@ -2,6 +2,10 @@
 
 Application designed to handle user onboard and token based authentication. It also offers a flexible role management feature that allows to assign specific roles to users and define custom permissions for each role to control precisely what users can and cannot do within the app.
 
+## Beck-End
+
+To see the back-end project go to the next [LINK](https://github.com/Eng-Francisco-Hernandez/admin-dashboard-backend)
+
 ## Project Demo
 
 To see the project go to the next [DEMO LINK](https://eng-francisco-hernandez.github.io/admin-dashboard/)
