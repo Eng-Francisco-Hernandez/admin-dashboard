@@ -1,46 +1,41 @@
-# Getting Started with Create React App
+## Admin Dashboard: Role-Based Auth & Management
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Application designed to handle user onboard and token based authentication. It also offers a flexible role management feature that allows to assign specific roles to users and define custom permissions for each role to control precisely what users can and cannot do within the app.
 
-## Available Scripts
+## Project Demo
 
-In the project directory, you can run:
+To see the project go to the next [DEMO LINK](https://eng-francisco-hernandez.github.io/admin-dashboard/)
 
-### `yarn start`
+## Installation and Setup Instructions
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Example:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Clone down this repository. You will need `node`, `npm` and `yarn` installed globally on your machine.
 
-### `yarn test`
+Installation:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`yarn install`
 
-### `yarn build`
+To Start The App:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`yarn start`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To Visit The App:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[http://localhost:3000/admin-dashboard](http://localhost:3000/admin-dashboard/)
 
-### `yarn eject`
+To Build The App:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`yarn build`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To Deploy The App Using GH Pages: (requires GH pages configuration)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`yarn deploy`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Reflection
 
-## Learn More
+Application designed to handle user onboard and token based authentication. It also offers a flexible role management feature that allows to assign specific roles to users and define custom permissions for each role to control precisely what users can and cannot do within the app.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The main programming language being used is TypeScript, and the technologies used to build the project are React, Sass, Apollo Client and Bootstrap.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The project also counts with a GitHub workflow that automatically deploys the built application using Github Pages whenever a new pull-request is opened to a release branch.
